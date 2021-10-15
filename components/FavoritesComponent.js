@@ -4,6 +4,7 @@ import { ListItem } from "react-native-elements";
 import { connect } from "react-redux";
 import { SwipeRow } from "react-native-swipe-list-view";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import * as Animatable from "react-native-animatable";
 import { deleteFavorite } from "../redux/ActionCreators";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
@@ -92,13 +93,15 @@ class Favorites extends Component {
 			);
 		}
 		return (
-			<FlatList
-				data={this.props.campsites.campsites.filter((campsite) =>
-					this.props.favorites.includes(campsite.id)
-				)}
-				renderItem={renderFavoriteItem}
-				keyExtractor={(item) => item.id.toString()}
-			/>
+			<Animatable.View animation="fadeInRightBig" duration={2000}>
+				<FlatList
+					data={this.props.campsites.campsites.filter((campsite) =>
+						this.props.favorites.includes(campsite.id)
+					)}
+					renderItem={renderFavoriteItem}
+					keyExtractor={(item) => item.id.toString()}
+				/>
+			</Animatable.View>
 		);
 	}
 }
