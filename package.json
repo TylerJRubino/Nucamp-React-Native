@@ -31,6 +31,7 @@
     "react_native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
     "redux": "4.0.5",
     "redux-logger": "3.0.6",
+    "redux-persist": "5.9.1",
     "redux-thunk": "2.3.0"
   },
   "devDependencies": {
