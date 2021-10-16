@@ -10,11 +10,11 @@ import {
 	Alert,
 	PanResponder,
 } from "react-native";
-import { Card, Icon, Input, Rating } from "react-native-elements";
+import { Card, Icon, Rating, Input } from "react-native-elements";
 import { connect } from "react-redux";
-import * as Animatable from "react-native-animatable";
 import { baseUrl } from "../shared/baseUrl";
 import { postFavorite, postComment } from "../redux/ActionCreators";
+import * as Animatable from "react-native-animatable";
 
 const mapStateToProps = (state) => {
 	return {
@@ -36,6 +36,8 @@ function RenderCampsite(props) {
 	const view = React.createRef();
 
 	const recognizeDrag = ({ dx }) => (dx < -200 ? true : false);
+
+	const recognizeComment = ({ dx }) => (dx > 200 ? true : false);
 
 	const panResponder = PanResponder.create({
 		onStartShouldSetPanResponder: () => true,
@@ -64,12 +66,14 @@ function RenderCampsite(props) {
 							text: "OK",
 							onPress: () =>
 								props.favorite
-									? console.log("Already set as a favorite")
+									? console.log("Already set as favorite")
 									: props.markFavorite(),
 						},
 					],
 					{ cancelable: false }
 				);
+			} else if (recognizeComment(gestureState)) {
+				props.onShowModal();
 			}
 			return true;
 		},
@@ -153,6 +157,7 @@ function RenderComments({ comments }) {
 class CampsiteInfo extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			rating: 5,
 			author: "",
